@@ -1,5 +1,4 @@
 public class Account{
-    public String displayName;
     private String username;
     private String password;
     public Number likeCount;
@@ -14,14 +13,6 @@ public class Account{
 
     public void signIn(){
         //Sign in
-    }
-
-    public void deleteAccount(){
-        //Delete Acount
-    }
-
-    public void changeDisplayName(){
-        //Change display name
     }
 
     public void getLocation(){
