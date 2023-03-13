@@ -64,8 +64,7 @@ public class Account{
     }
 
     private static User createUser(String givenUsername){
-        User u = new User();
-        u.username = givenUsername;
+        User u = new User(givenUsername);
         return u;
     }
 

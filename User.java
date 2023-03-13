@@ -1,6 +1,9 @@
 public class User {
     public String username = null;
 
+    public User (String user){
+        username = user;
+    }
     public void makePost(){
         //Make post
     }
