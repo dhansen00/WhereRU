@@ -2,7 +2,7 @@ import java.sql.*;
 
 public class Account{
 
-    public User createAccount(String givenUsername, String givenPassword){
+    public static User createAccount(String givenUsername, String givenPassword){
         String psql = "SELECT username FROM logins WHERE username LIKE '" + givenUsername + "';";
         ResultSet r = Database.query(psql);
         String res1 = null;
@@ -38,7 +38,7 @@ public class Account{
         
     }
 
-    public User signIn(String givenUsername,String givenPassword){
+    public static User signIn(String givenUsername,String givenPassword){
         String psql = "SELECT password FROM logins WHERE username LIKE '" + givenUsername + "';";
         ResultSet r = Database.query(psql);
         String password = null;
@@ -63,7 +63,7 @@ public class Account{
 
     }
 
-    private User createUser(String givenUsername){
+    private static User createUser(String givenUsername){
         User u = new User();
         u.username = givenUsername;
         return u;

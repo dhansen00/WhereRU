@@ -88,33 +88,5 @@ public class Database {
             st.setString(i+1, values[i]);        
         }
         st.executeUpdate();
-    }
-    /* 
-    public static void main(String[] args){
-        String[] tableCols = {"username","password"};
-        String[] values = {"coolguy69","12345"};
-        String table = "logins";
-        try{
-            insertString(table,tableCols,values);
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
-        String psql = "SELECT * FROM logins";
-        ResultSet rs = query(psql);
-        System.out.println("username | password");
-        try{
-            while (rs.next()){
-                    String res1 = rs.getString(1);
-                    String res2 = rs.getString(2);
-                    
-                    System.out.println(res1 + '|' + res2);
-            }
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
-    */
+    }    
 }
