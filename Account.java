@@ -29,7 +29,7 @@ public class Account{
             }
             System.out.println("Account created successfully.");
 
-            return createUser(givenUsername);
+            return new User(givenUsername);
         }
         else{   //The username is taken and therefore an account cannot be created
             System.out.print(givenUsername + " is already taken.");
@@ -58,14 +58,8 @@ public class Account{
         }
         else{
             System.out.println("Sign in successfull.");
-            return createUser(givenUsername);
+            return new User(givenUsername);
         }
 
     }
-
-    private static User createUser(String givenUsername){
-        User u = new User(givenUsername);
-        return u;
-    }
-
 }
