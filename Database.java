@@ -13,9 +13,9 @@ public class Database {
             String hostname = "whereru.cui0zqioehzd.us-east-2.rds.amazonaws.com";
             String port = "5432";
             String jdbcUrl = "jdbc:postgresql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
-            System.out.println("Getting remote connection with connection string from environment variables.");
+            //System.out.println("Getting remote connection with connection string from environment variables.");
             Connection con = DriverManager.getConnection(jdbcUrl);
-            System.out.println("Remote connection successful.");
+            //System.out.println("Remote connection successful.");
             return con;
         }
         catch (ClassNotFoundException e) { 
