@@ -2,7 +2,7 @@ import java.sql.*;
 
 public class Account{
 
-    public static void createAccount(String givenUsername, String givenPassword){
+    public User createAccount(String givenUsername, String givenPassword){
         String psql = "SELECT username FROM logins WHERE username LIKE '" + givenUsername + "';";
         ResultSet r = Database.query(psql);
         String res1 = null;
@@ -29,39 +29,44 @@ public class Account{
             }
             System.out.println("Account created successfully.");
 
-            //add account to other tables
+            return createUser(givenUsername);
         }
         else{   //The username is taken and therefore an account cannot be created
             System.out.print(givenUsername + " is already taken.");
+            return null;
         }
         
     }
 
-    public void signIn(){
-        //Sign in
+    public User signIn(String givenUsername,String givenPassword){
+        String psql = "SELECT password FROM logins WHERE username LIKE '" + givenUsername + "';";
+        ResultSet r = Database.query(psql);
+        String password = null;
+        try{
+            while (r.next()){
+                password = r.getString(1);
+                break;
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        if (password == null || !password.equals(givenPassword)){
+            System.out.println("Sign in Unsuccessfull.");
+            return null;
+        }
+        else{
+            System.out.println("Sign in successfull.");
+            return createUser(givenUsername);
+        }
+
     }
 
-    public void getLocation(){
-        //Get location
+    private User createUser(String givenUsername){
+        User u = new User();
+        u.username = givenUsername;
+        return u;
     }
 
-    public void makePost(){
-        //Make post
-    }
-
-    public void getRecentPosts(){
-        //Get recent posts
-    }
-
-    public void getLikedPosts(){
-        //Get liked posts
-    }
-
-    public void makeComment(){
-        //Make comment
-    }
-
-    public static void main(String [] args){
-        createAccount("Jose","joseiscool");
-    }
 }
