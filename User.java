@@ -10,7 +10,7 @@ public class User {
     }
     public void makePost(String text, Double[] location, int radius, String[] tags){
         Calendar cal = Calendar.getInstance();
-        Date date=cal.getTime();
+        java.util.Date date=cal.getTime();
         DateFormat dateFormat = new SimpleDateFormat("HHmmss");
         int postTime = Integer.parseInt(dateFormat.format(date));
         try{
