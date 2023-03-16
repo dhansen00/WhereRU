@@ -4,8 +4,9 @@ public class User {
     public User (String user){
         username = user;
     }
-    public void makePost(){
-        //Make post
+    public void makePost(String text, Double[] location, int radius, String[] tags){
+        //get current time
+        //Database.insertPost(username, text, "TIME", location, radius, tags);
     }
     public void makeComment(){
         //Make comment

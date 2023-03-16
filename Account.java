@@ -18,11 +18,9 @@ public class Account{
 
         if (res1 == null){
             //Account can be created
-            String[] tableCols = {"username","password"};
             String[] values = {givenUsername,givenPassword};
-            String table = "logins";
             try{
-                Database.insertString(table,tableCols,values);
+                Database.insertLogin(values);
             }
             catch (Exception e){
                 System.out.println(e.getMessage());
