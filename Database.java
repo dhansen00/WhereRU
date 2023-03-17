@@ -69,7 +69,7 @@ public class Database {
         }
         st.setDouble(11,location[0]);
         st.setDouble(12,location[1]);
-        st.setInt(13,timeStamp); //timestamp should be of the format hhmmss
+        st.setInt(13,timeStamp); //timestamp should be of the format yyyyMMddhhmmss
 
         st.executeUpdate();
     }
@@ -91,6 +91,21 @@ public class Database {
             st.setString(i+1, values[i]);        
         }
         st.executeUpdate();
-    }   
 
+        //create an entry in accountLikes for the user
+        PreparedStatement st2 = conn.prepareStatement("INSERT INTO \"accountLikes\" VALUES (?,?)");
+        st.setString(1, values[0]);
+        st.setInt(2, 0);
+        st2.executeUpdate();
+    }  
+    
+    public static void insertComment(){}
+
+    public static void likePost(){}
+    
+    public static void dislikePost(){}
+
+    public static void deleteComment(){}
+
+    public static void deletePost(){}
 }

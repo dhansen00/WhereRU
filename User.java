@@ -1,17 +1,16 @@
-import java.text.*;
-import java.util.*;
-import java.sql.*;
-
 public class User {
-    public String username = null;
+    private String username = null;
+    private int likes = 0;
 
-    public User (String user){
+    public User (String user,int internetPoints){
         username = user;
+        likes = internetPoints;
     }
+    /* 
     public void makePost(String text, Double[] location, int radius, String[] tags){
         Calendar cal = Calendar.getInstance();
         java.util.Date date=cal.getTime();
-        DateFormat dateFormat = new SimpleDateFormat("HHmmss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         int postTime = Integer.parseInt(dateFormat.format(date));
         try{
             Database.insertPost(username, text, postTime, location, radius, tags);
@@ -21,21 +20,17 @@ public class User {
         }
         //return post object?
     }
-    public void makeComment(){
-        //Make comment
+    */
+    public String getUsername(){
+        return new String(username);
     }
 
     public void getLocation(){
         //Get location
     }
 
-    public void getRecentPosts(){
-        ResultSet r = Database.query("SELECT * FROM posts WHERE author = '"+ username +"' ORDER BY posts.id DESC;");
-        //return an array of posts up to x amount of posts
+    public int getLikes(){
+        int ret = likes;
+        return ret;
     }
-    
-    public void getLikedPosts(){
-        //Get liked posts
-    }
-    
 }

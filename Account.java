@@ -27,7 +27,7 @@ public class Account{
             }
             System.out.println("Account created successfully.");
 
-            return new User(givenUsername);
+            return new User(givenUsername,0);
         }
         else{   //The username is taken and therefore an account cannot be created
             System.out.print(givenUsername + " is already taken.");
@@ -48,16 +48,25 @@ public class Account{
         }
         catch (Exception e){
             System.out.println(e.getMessage());
+            return null;
         }
 
         if (password == null || !password.equals(givenPassword)){
             System.out.println("Sign in Unsuccessfull.");
             return null;
         }
-        else{
-            System.out.println("Sign in successfull.");
-            return new User(givenUsername);
+        System.out.println("Sign in successfull.");
+        r = Database.query("SELECT likes FROM \"accountLikes\" WHERE username = '" + givenUsername + "';");
+        int likes = 0;
+        try{
+            r.next();
+            likes = r.getInt(1);
         }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        return new User(givenUsername,likes);
 
     }
 }
