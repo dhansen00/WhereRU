@@ -263,4 +263,11 @@ public class Database {
         return true;
     }
 
+    public static int getLikes(int postid) throws Exception{
+        int likes;
+        ResultSet r = query("SELECT likes FROM posts WHERE postid = " + postid + ";");
+        r.next();
+        likes = r.getInt(1);
+        return likes;
+    }
 }
