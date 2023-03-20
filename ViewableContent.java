@@ -1,13 +1,17 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class ViewableContent{
-    private static String username;
+    private String username;
     private int viewRadius;
     private String sortMethod;
-    private Bool commentViewable;
-    private List<Content> content = new ArrayList<Content>();
+    private Boolean commentViewable;
+    private ArrayList<Content> content = new ArrayList<Content>();
 
 
     public ArrayList<Content> showContent(){
-        return self.content;
+        return this.content;
     }
 
     public void updateContent(){
@@ -15,22 +19,22 @@ public class ViewableContent{
     }
 
     public void updateSort(String newSort){
-        self.sortMethod = newSort;
-        self.sort();
+        this.sortMethod = newSort;
+        this.sort();
     }
 
     private void sort(){
-        switch (self.sortMethod) {
+        switch (this.sortMethod) {
             case "time":
-                Collections.sort(self.content, new ContentTimeComparator());
+                Collections.sort(this.content, new ContentTimeComparator());
                 break;
             case "likes":
-                Collections.sort(self.content, new ContentLikeComparator());
+                Collections.sort(this.content, new ContentLikeComparator());
                 break;
             case "distance":
                 // to be implemented
             default:
-                throw new IllegalAgumentException("Invalid sorting method");
+                throw new IllegalArgumentException("Invalid sorting method");
         }  
     }
 

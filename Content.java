@@ -1,49 +1,45 @@
 import java.lang.Math;
+import java.util.Comparator;
 
 public class Content{
-    private static String text;
-    private static String username;
-    private static int posttime;   
-    private int likes;
-    private int dislikes;
+    protected int id;
+    protected String text;
+    protected String username;
+    protected int posttime;   
+    protected int likes;
+    protected int dislikes;
 
 
     public String getContent(){
-        return self.text;
+        return this.text;
     }
 
     public String getUsername(){
-        return self.username;
+        return this.username;
     }
 
     public int getPostTime(){
-        return self.posttime;
+        return this.posttime;
     }
 
     public int getLikes(){
-        return self.likes;
+        return this.likes;
     }
 
     public int getDislikes(){
-        return self.dislikes;
-    }
-
-    public void like(){
-
-    }
-
-    public void dislike(){
-
+        return this.dislikes;
     }
 }
 
-public Class ContentTimeComparator implements Comparator<Content>{
+class ContentTimeComparator implements Comparator<Content>{
+    @Override
     public int compare(Content c1, Content c2){
         return c1.getPostTime() - c2.getPostTime();
     }
 }
 
-public Class ContentLikeComparator implements Comparator<Content>{
+class ContentLikeComparator implements Comparator<Content>{
+    @Override
     public int compare(Content c1, Content c2){
         return c1.getLikes() - c2.getLikes();
     }
