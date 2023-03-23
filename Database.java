@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Database {
 
@@ -269,5 +270,48 @@ public class Database {
         r.next();
         likes = r.getInt(1);
         return likes;
+    }
+
+    public static Post[] getNearbyPosts(Double currLatitude, Double currLongitude, int radius){
+        // 1mile = 0.01831501831 degrees of longitude
+        // 1mile = 0.01449275362 degrees of latitude
+
+        //Collect all nearby posts within a box with the radius given
+        Double mileToLat = 0.01449275362;
+        Double mileToLon = 0.01831501831;
+        Double maxLatitude = currLatitude + (mileToLat * radius);
+        Double minLatitude = currLatitude - (mileToLat * radius);
+        Double maxLongitude = currLongitude + (mileToLon * radius);
+        Double minLongitude = currLongitude - (mileToLon * radius);
+        ResultSet r = query("SELECT * FROM posts p WHERE p.latitude <= "+ maxLatitude + " AND p.latitude >= " + minLatitude + " AND p.longitude <= " + maxLongitude + " AND p.longitude >= " + minLongitude + " LIMIT 50;");
+        Post[] posts = new Post[50];
+        try {
+            while (r.next()){
+                int postid = r.getInt(1);
+                String postAuthor = r.getString(2);
+                String postText = r.getString(3);
+                int postRadius = r.getInt(4);
+                int postLikes = r.getInt(5);
+                ArrayList<String> postTags = new ArrayList<String>();
+                for (int i = 6; i < 11;i++){
+                    String tag = r.getString(i);
+                    if (tag != null){
+                        postTags.add(tag);
+                    }
+                }
+                Double postLatitude = r.getDouble(11);
+                Double postLongitutde = r.getDouble(12);
+                int postTime = r.getInt(13);
+                
+                //Create post object and add to list
+            }
+        } catch (Exception e) {
+            return null;
+        }
+
+        //parse posts list to ensure all fit inside a circle centered around 
+
+        return posts;
+        
     }
 }
