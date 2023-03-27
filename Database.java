@@ -272,7 +272,7 @@ public class Database {
         return likes;
     }
 
-    public static Post[] getNearbyPosts(Double currLatitude, Double currLongitude, int radius){
+    public static ArrayList<Post> getNearbyPosts(Double currLatitude, Double currLongitude, int radius){
         // 1mile = 0.01831501831 degrees of longitude
         // 1mile = 0.01449275362 degrees of latitude
 
@@ -284,7 +284,7 @@ public class Database {
         Double maxLongitude = currLongitude + (mileToLon * radius);
         Double minLongitude = currLongitude - (mileToLon * radius);
         ResultSet r = query("SELECT * FROM posts p WHERE p.latitude <= "+ maxLatitude + " AND p.latitude >= " + minLatitude + " AND p.longitude <= " + maxLongitude + " AND p.longitude >= " + minLongitude + " LIMIT 50;");
-        Post[] posts = new Post[50];
+        ArrayList<Post> posts = new ArrayList<Post>();
         try {
             while (r.next()){
                 int postid = r.getInt(1);
@@ -303,15 +303,37 @@ public class Database {
                 Double postLongitutde = r.getDouble(12);
                 int postTime = r.getInt(13);
                 
-                //Create post object and add to list
+                //Ensure post fits within radius and is not extraneous
+                if (latLonDistance(currLatitude,currLongitude,postLatitude,postLongitutde) <= radius){
+                    //Create post object and add to list
+                    Post curr = new Post(postAuthor, postText, postTags, radius, postLatitude, postLongitutde, postTime,postLikes);
+                    posts.add(curr);
+                }
+
+                
             }
         } catch (Exception e) {
             return null;
         }
 
-        //parse posts list to ensure all fit inside a circle centered around 
-
         return posts;
         
+    }
+
+    private static Double latLonDistance(Double lat1, Double lon1, Double lat2, Double lon2){
+        //Haversine Formula
+        double R = 6371.0; // Earth's radius in kilometers
+    
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+               Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+               Math.sin(dLon/2) * Math.sin(dLon/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double distance = R * c;
+        
+        //Convert km to miles
+        distance = distance / 1.609;
+        return distance;
     }
 }

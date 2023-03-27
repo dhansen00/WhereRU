@@ -8,7 +8,7 @@ public class Post extends Content{
     private int radius;
     private ArrayList<String> tags = new ArrayList<String>();
 
-    public Post(String username, String text, ArrayList<String> tags, int radius, double lat, double lon, int posttime){
+    public Post(String username, String text, ArrayList<String> tags, int radius, double lat, double lon, int posttime,int likes){
         this.username = username;
         this.text = text;
         this.tags = tags;
