@@ -25,8 +25,8 @@ public class User {
         return new String(username);
     }
 
-    public double[] getLocation(){
-        double[] location = new double[2];
+    public Double[] getLocation(){
+        Double[] location = new Double[2];
         location[0] = 0.0;
         location[1] = 0.0;
         return location;

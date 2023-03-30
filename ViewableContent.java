@@ -21,11 +21,21 @@ public class ViewableContent{
 
     public boolean makePost(String text, int radius, ArrayList<String> tags){
         Date currentDate = new Date();
-        //insertPost(user.getUsername(), text, Long timeStamp, user.getLocation(), radius, tags)
+        Long longdate = currentDate.getTime();
+        Double[] loc = user.getLocation();
+        try{
+            Database.insertPost(user.getUsername(), text, longdate, loc, radius, tags);
+            updateContent();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        //return post object?
+        return false;
     }
 
     public void updateContent(){
-        double[] pos = user.getLocation();
+        Double[] pos = user.getLocation();
         Database.getNearbyPosts(pos[0], pos[1], viewRadius);
     }
 
@@ -48,5 +58,9 @@ public class ViewableContent{
                 throw new IllegalArgumentException("Invalid sorting method");
         }  
     }
-
+    public static void main(String[] args){
+        Date date = new Date();
+        long longdate = date.getTime();
+        System.out.println(longdate);
+    }
 }

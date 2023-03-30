@@ -29,10 +29,6 @@ public class Content{
     public int getDislikes(){
         return this.dislikes;
     }
-
-    public static void main(String[] args){
-        System.out.println("hello world");
-    }
 }
 
 class ContentTimeComparator implements Comparator<Content>{
