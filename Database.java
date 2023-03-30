@@ -39,7 +39,7 @@ public class Database {
         }
     }
 
-    public static boolean insertPost(String username, String text, Long timeStamp, Double[] location, int radius, String[] tags) throws Exception{
+    public static boolean insertPost(String username, String text, Long timeStamp, Double[] location, int radius, ArrayList<String> tags) throws Exception{
         //sets up psql code to be in the form "INSERT INTO table(col1,...) VALUES (?,...)"
         String psql = "INSERT INTO posts VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         Connection conn = getRemoteConnection();
@@ -62,8 +62,8 @@ public class Database {
         st.setInt(4,radius);
         st.setInt(5,0);
         int tagCtr;
-        for (tagCtr = 0; tagCtr < tags.length;tagCtr++){
-            st.setString(5+tagCtr+1,tags[tagCtr]);
+        for (tagCtr = 0; tagCtr < tags.size();tagCtr++){
+            st.setString(5+tagCtr+1,tags.get(tagCtr));
         }
         for(;tagCtr < 5; tagCtr++){
             st.setString(tagCtr+5+1,null);
