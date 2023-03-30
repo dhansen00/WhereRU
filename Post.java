@@ -33,10 +33,17 @@ public class Post extends Content{
         return this.tags;
     }
 
-    public double updateDistance(double lat, double lon){
-        this.lastKnownDist =
-        Math.acos(Math.sin(lat)*Math.sin(latitude)+Math.cos(lat)*Math.cos(latitude)*Math.cos(longitude-lon))*6371000;
-        return this.lastKnownDist;
+    public void updateDistance(double lat, double lon){
+        double R = 6371.0; // Earth's radius in kilometers
+    
+        double dLat = Math.toRadians(lat - this.latitude);
+        double dLon = Math.toRadians(lon - this.longitude);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+               Math.cos(Math.toRadians(this.latitude)) * Math.cos(Math.toRadians(lat)) *
+               Math.sin(dLon/2) * Math.sin(dLon/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double distance = R * c;
+        this.lastKnownDist = (int)(distance * 1000);
     }
 
     public void like(){

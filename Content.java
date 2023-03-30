@@ -1,11 +1,11 @@
-import java.lang.Math;
+//import java.lang.Math;
 import java.util.Comparator;
 
 public class Content{
     protected int id;
     protected String text;
     protected String username;
-    protected int posttime;   
+    protected Long posttime;   
     protected int likes;
     protected int dislikes;
 
@@ -18,7 +18,7 @@ public class Content{
         return this.username;
     }
 
-    public int getPostTime(){
+    public Long getPostTime(){
         return this.posttime;
     }
 
@@ -29,12 +29,16 @@ public class Content{
     public int getDislikes(){
         return this.dislikes;
     }
+
+    public static void main(String[] args){
+        System.out.println("hello world");
+    }
 }
 
 class ContentTimeComparator implements Comparator<Content>{
     @Override
     public int compare(Content c1, Content c2){
-        return c1.getPostTime() - c2.getPostTime();
+        return (int)(c1.getPostTime() - c2.getPostTime());
     }
 }
 
