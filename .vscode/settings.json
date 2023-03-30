@@ -1,7 +1,0 @@
-{
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "/Users/catek/Library/CloudStorage/Dropbox/SDD/WhereRU/**/*.jar",
-        "/Users/catek/Downloads/postgresql-42.6.0.jar"
-    ]
-}
