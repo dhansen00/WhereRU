@@ -9,6 +9,9 @@ public class Content{
     protected int likes;
     protected int dislikes;
 
+    public int getId(){
+        return this.id;
+    }
 
     public String getContent(){
         return this.text;

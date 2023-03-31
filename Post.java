@@ -8,7 +8,7 @@ public class Post extends Content{
     private int radius;
     private ArrayList<String> tags = new ArrayList<String>();
 
-    public Post(int id, String username, String text, ArrayList<String> tags, int radius, Double lat, Double lon, Long posttime,int likes){
+    public Post(int id, String username, String text, ArrayList<String> tags, int radius, Double lat, Double lon, Long posttime,int likes, int dislikes){
         this.id = id;
         this.username = username;
         this.text = text;
@@ -17,14 +17,11 @@ public class Post extends Content{
         this.latitude = lat;
         this.longitude = lon;
         this.posttime = posttime;
-        this.likes = 0;
-        this.dislikes = 0;
+        this.likes = likes;
+        this.dislikes = likes;
         this.lastKnownDist = 0;
     }
 
-    public int getId(){
-        return this.id;
-    }
 
     public double getDistance(){
         return this.lastKnownDist;
