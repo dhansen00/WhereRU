@@ -39,7 +39,7 @@ public class Database {
         }
     }
 
-    public static boolean insertPost(String username, String text, Long timeStamp, Double[] location, int radius, ArrayList<String> tags) throws Exception{
+    public static int insertPost(String username, String text, Long timeStamp, Double[] location, int radius, ArrayList<String> tags) throws Exception{
         //sets up psql code to be in the form "INSERT INTO table(col1,...) VALUES (?,...)"
         String psql = "INSERT INTO posts VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         Connection conn = getRemoteConnection();
@@ -74,10 +74,22 @@ public class Database {
 
         int inserted = st.executeUpdate();
         if (inserted == 1){
-            return true;
+            ResultSet r1 = query("SELECT max(id) FROM posts;");
+            int nextid1 = 0;
+            try{
+                r1.next();
+                nextid1 = r1.getInt(1);
+
+                //Returns the id of the created comment or 0 if it fails
+                return nextid1;
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
+                return 0;
+            }
         }
         else{
-            return false;
+            return 0;
         }
     }
 
@@ -112,7 +124,7 @@ public class Database {
         }
     }  
     
-    public static boolean insertComment(String username,int postid,String text,Long timeStamp) throws Exception{
+    public static int insertComment(String username,int postid,String text,Long timeStamp) throws Exception{
         String psql = "INSERT INTO comments VALUES (?,?,?,?,?,?)";
 
         //code to get next available id
@@ -138,9 +150,19 @@ public class Database {
         st.setLong(6, timeStamp);
         int inserted = st.executeUpdate();
         if (inserted != 1){
-            return false;
+            return 0;
         }
-        return true;
+        r = query("SELECT max(id) FROM comments;");
+        nextid = 0;
+        try{
+            r.next();
+            nextid = r.getInt(1);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        //Returns the id of the created comment or 0 if it fails
+        return nextid;
     }
 
     public static boolean likePost(String authorUsername, int postid) throws Exception{
@@ -332,8 +354,9 @@ public class Database {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         double distance = R * c;
         
-        //Convert km to miles
-        distance = distance / 1.609;
+        //Convert km to meters
+        distance = distance * 1000;
         return distance;
     }
+
 }
