@@ -22,6 +22,10 @@ public class Post extends Content{
         this.lastKnownDist = 0;
     }
 
+    public int getId(){
+        return this.id;
+    }
+
     public double getDistance(){
         return this.lastKnownDist;
     }

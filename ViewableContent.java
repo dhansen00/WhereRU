@@ -7,16 +7,39 @@ public class ViewableContent{
     private String sortMethod;
     private ArrayList<Content> content = new ArrayList<Content>();
     private ArrayList<Post> posts = new ArrayList<Post>();
+    private ArrayList<Integer> commentDisplay = new ArrayList<Integer>();
     private User user;
 
+    public ViewableContent(User user){
+        this.user = user;
+        this.sortMethod = "time";
+        this.updateContent();
+    }
 
     public ArrayList<Content> showContent(){
-        return this.content;
+        this.updateContent();
+        
+        ArrayList<Content> shownContent = new ArrayList<Content>();
+        for(int i = 0; i < this.posts.size(); i++){
+            shownContent.add(this.posts.get(i));
+            if(commentDisplay.contains(this.posts.get(i).getId())){
+                //retrieve and add relevent comments
+            }
+        }
+        return shownContent;
     }
 
     public void updateRadius(int newRadius){
         this.viewRadius = newRadius;
         this.updateContent();
+    }
+
+    public void showComment(int postid){
+        this.commentDisplay.add(postid);
+    }
+
+    public void hideComment(int postid){
+        this.commentDisplay.remove(postid);
     }
 
     public boolean makePost(String text, int radius, ArrayList<String> tags){
@@ -30,7 +53,6 @@ public class ViewableContent{
         catch (Exception e){
             System.out.println(e.getMessage());
         }
-        //return post object?
         return false;
     }
 
