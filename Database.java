@@ -101,8 +101,8 @@ public class Database {
 
         //create an entry in accountLikes for the user
         PreparedStatement st2 = conn.prepareStatement("INSERT INTO \"accountLikes\" VALUES (?,?)");
-        st.setString(1, values[0]);
-        st.setInt(2, 0);
+        st2.setString(1, values[0]);
+        st2.setInt(2, 0);
         int inserted = st2.executeUpdate();
         if (inserted == 1){
             return true;
@@ -356,5 +356,4 @@ public class Database {
         }
         return comments;
     }
-
 }
