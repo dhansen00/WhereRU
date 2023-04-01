@@ -12,17 +12,29 @@ public class ViewableContent{
 
     public ViewableContent(User user){
         this.user = user;
-        this.sortMethod = "time";
+        this.sortMethod = "distance";
+        /*
+        ArrayList<String> tags = new ArrayList<String>();
+        tags.add("test");
+        Long time = (long) 10000;
+        this.posts.add(new Post(1,"alice","hi",tags, 50, (Double)0.0,(Double)0.0, time, 5));
+        this.posts.add(new Post(2, "bob", "hey", tags, 40, (Double)0.0, (Double)0.0, (long)100000, 6));
+        this.commentDisplay.add(1);
+        this.posts.get(0).updateDistance((Double) 1.0, (Double)1.0);
+        this.posts.get(1).updateDistance((Double)2.0,(Double)2.0);
+        this.sort();
         this.updateContent();
+        */
     }
 
     public ArrayList<Content> showContent(){
         this.updateContent();
-        
+
         ArrayList<Content> shownContent = new ArrayList<Content>();
         for(int i = 0; i < this.posts.size(); i++){
             shownContent.add(this.posts.get(i));
             if(commentDisplay.contains(this.posts.get(i).getId())){
+                //shownContent.add(new Comment(1, 1, "charlie", "sup", (long)10000, 5));
                 //retrieve and add relevent comments
             }
         }
@@ -75,6 +87,8 @@ public class ViewableContent{
                 Collections.sort(this.posts, new ContentLikeComparator());
                 break;
             case "distance":
+                Collections.sort(this.posts, new PostDistanceComparator());
+                break;
                 // to be implemented
             default:
                 throw new IllegalArgumentException("Invalid sorting method");
@@ -84,5 +98,13 @@ public class ViewableContent{
         Date date = new Date();
         long longdate = date.getTime();
         System.out.println(longdate);
+        /*
+        ViewableContent content = new ViewableContent();
+        ArrayList<Content> shown = content.showContent();
+
+        for(int i = 0; i < shown.size(); i++){
+            System.out.println(shown.get(i).getContent());
+        }
+        */
     }
 }

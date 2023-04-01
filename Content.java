@@ -44,6 +44,6 @@ class ContentTimeComparator implements Comparator<Content>{
 class ContentLikeComparator implements Comparator<Content>{
     @Override
     public int compare(Content c1, Content c2){
-        return c1.getLikes() - c2.getLikes();
+        return c2.getLikes() - c1.getLikes();
     }
 }
