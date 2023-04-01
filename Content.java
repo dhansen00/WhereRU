@@ -32,6 +32,10 @@ public class Content{
     public int getDislikes(){
         return this.dislikes;
     }
+
+    public String toString(){//overriding the toString() method  
+        return this.getId() + " " + this.getLikes() + " " + this.getDislikes() + " " + this.getPostTime() + " " + this.getUsername() + " " + this.getContent();  
+    }
 }
 
 class ContentTimeComparator implements Comparator<Content>{

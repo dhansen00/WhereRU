@@ -37,7 +37,7 @@ public class Account{
     }
 
     public static User signIn(String givenUsername,String givenPassword){
-        String psql = "SELECT password FROM logins WHERE username LIKE '" + givenUsername + "';";
+        String psql = "SELECT password FROM logins WHERE username LIKE'" + givenUsername + "';";
         ResultSet r = Database.query(psql);
         String password = null;
         try{
@@ -67,6 +67,6 @@ public class Account{
             return null;
         }
         return new User(givenUsername,likes);
-
     }
+
 }

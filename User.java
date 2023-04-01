@@ -36,4 +36,8 @@ public class User {
         int ret = likes;
         return ret;
     }
+
+    public String toString(){//overriding the toString() method  
+        return this.getUsername() + " " + this.getLikes() + " " + this.getLocation()[0] + " " + this.getLocation()[1];  
+    }  
 }
