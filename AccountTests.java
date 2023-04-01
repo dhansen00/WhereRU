@@ -18,6 +18,8 @@ public class AccountTests {
     public void login() {
         User login_test = Account.signIn("Jose","joseiscool");
         assert(login_test.getUsername().equals("Jose"));
+        System.out.print("Username: " + login_test.getUsername() + "\nLikes: " + login_test.getLikes());
+
     }
 
 }
