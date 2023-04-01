@@ -13,6 +13,7 @@ public class ViewableContent{
     public ViewableContent(User user){
         this.user = user;
         this.sortMethod = "distance";
+        this.viewRadius = 50;
         /*
         ArrayList<String> tags = new ArrayList<String>();
         tags.add("test");
@@ -70,7 +71,7 @@ public class ViewableContent{
 
     public void updateContent(){
         Double[] pos = user.getLocation();
-        Database.getNearbyPosts(pos[0], pos[1], viewRadius);
+        this.posts = Database.getNearbyPosts(pos[0], pos[1], this.viewRadius);
     }
 
     public void updateSort(String newSort){
@@ -89,7 +90,6 @@ public class ViewableContent{
             case "distance":
                 Collections.sort(this.posts, new PostDistanceComparator());
                 break;
-                // to be implemented
             default:
                 throw new IllegalArgumentException("Invalid sorting method");
         }  
@@ -98,13 +98,14 @@ public class ViewableContent{
         Date date = new Date();
         long longdate = date.getTime();
         System.out.println(longdate);
-        /*
-        ViewableContent content = new ViewableContent();
+        //User user = Account.createAccount("test1", "test1");
+        User user = Account.signIn("test1", "test1");
+        System.out.println(user.getUsername());
+        ViewableContent content = new ViewableContent(user);
+        //ViewableContent content = new ViewableContent();
         ArrayList<Content> shown = content.showContent();
-
         for(int i = 0; i < shown.size(); i++){
             System.out.println(shown.get(i).getContent());
         }
-        */
     }
 }
