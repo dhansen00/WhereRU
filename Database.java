@@ -306,7 +306,7 @@ public class Database {
                 //Ensure post fits within radius and is not extraneous
                 if (latLonDistance(currLatitude,currLongitude,postLatitude,postLongitutde) <= radius){
                     //Create post object and add to list
-                    Post test = new Post(postid, postAuthor, postText,postTags,postRadius,postLatitude,postLongitutde,postTime,postLikes);
+                    Post curr = new Post(postid, postAuthor, postText,postTags,postRadius,postLatitude,postLongitutde,postTime,postLikes);
                     posts.add(curr);
                 }
 
@@ -337,7 +337,7 @@ public class Database {
         return distance;
     }
 
-    public static ArrayList<Comment> getComments(int postid) {
+    public static ArrayList<Comment> getComments(int postid) throws Exception {
         ResultSet r = query("SELECT * FROM comments WHERE postid = " + postid + ";");
 
         ArrayList<Comment> comments = new ArrayList<Comment>();
@@ -350,7 +350,7 @@ public class Database {
             Long time = r.getLong(6);
 
             //create comment object
-            Comment curr =  new Comment(commentid,parentid,author,time,likes);
+            Comment curr =  new Comment(commentid,parentid,author,text,time,likes);
             //add to list
             comments.add(curr);
         }
