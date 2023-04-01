@@ -101,8 +101,8 @@ public class Database {
 
         //create an entry in accountLikes for the user
         PreparedStatement st2 = conn.prepareStatement("INSERT INTO \"accountLikes\" VALUES (?,?)");
-        st.setString(1, values[0]);
-        st.setInt(2, 0);
+        st2.setString(1, values[0]);
+        st2.setInt(2, 0);
         int inserted = st2.executeUpdate();
         if (inserted == 1){
             return true;
@@ -306,7 +306,6 @@ public class Database {
                 //Ensure post fits within radius and is not extraneous
                 if (latLonDistance(currLatitude,currLongitude,postLatitude,postLongitutde) <= radius){
                     //Create post object and add to list
-                    Post curr = new Post(postAuthor, postText, postTags, radius, postLatitude, postLongitutde, postTime,postLikes);
                     Post test = new Post(postid, postAuthor, postText,postTags,postRadius,postLatitude,postLongitutde,postTime,postLikes);
                     posts.add(curr);
                 }
@@ -351,11 +350,10 @@ public class Database {
             Long time = r.getLong(6);
 
             //create comment object
-            Comment curr =  new Comment();
+            Comment curr =  new Comment(commentid,parentid,author,time,likes);
             //add to list
+            comments.add(curr);
         }
-
         return comments;
     }
-
 }
