@@ -28,7 +28,7 @@ public class Database {
         return null;
     }
 
-    private static ResultSet query(String psql){
+    public static ResultSet query(String psql){
         Connection conn = getRemoteConnection();
         try{
             Statement statement = conn.createStatement();
@@ -354,7 +354,6 @@ public class Database {
             //add to list
             comments.add(curr);
         }
-        
         return comments;
     }
 
