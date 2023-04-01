@@ -8,7 +8,7 @@ public class Post extends Content{
     private int radius;
     private ArrayList<String> tags = new ArrayList<String>();
 
-    public Post(int id, String username, String text, ArrayList<String> tags, int radius, Double lat, Double lon, Long posttime,int likes, int dislikes){
+    public Post(int id, String username, String text, ArrayList<String> tags, int radius, Double lat, Double lon, Long posttime,int likes){
         this.id = id;
         this.username = username;
         this.text = text;
@@ -18,7 +18,6 @@ public class Post extends Content{
         this.longitude = lon;
         this.posttime = posttime;
         this.likes = likes;
-        this.dislikes = likes;
         this.lastKnownDist = 0;
     }
 
@@ -61,7 +60,7 @@ public class Post extends Content{
     public void dislike(){
         try{
             if(Database.dislikePost(this.username, this.id)){
-                this.dislikes += 1;
+                this.likes -= 1;
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
