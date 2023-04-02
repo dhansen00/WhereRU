@@ -18,7 +18,6 @@ public class ViewableContent{
 
     public ArrayList<Content> showContent(){
         this.updateContent();
-        this.showComment(1);
         ArrayList<Content> shownContent = new ArrayList<Content>();
         for(int i = 0; i < this.posts.size(); i++){
             shownContent.add(this.posts.get(i));
@@ -47,7 +46,7 @@ public class ViewableContent{
     }
 
     public void hideComment(int postid){
-        this.commentDisplay.remove(postid);
+        this.commentDisplay.remove(this.commentDisplay.indexOf(postid));
     }
 
     public boolean makePost(String text, int radius, ArrayList<String> tags){
@@ -82,11 +81,19 @@ public class ViewableContent{
     public void updateContent(){
         Double[] pos = user.getLocation();
         this.posts = Database.getNearbyPosts(pos[0], pos[1], this.viewRadius);
+        this.sort();
     }
 
     public void updateSort(String newSort){
         this.sortMethod = newSort;
         this.sort();
+    }
+
+    public void updateDistances(){
+        Double[] loc = this.user.getLocation();
+        for(int i = 0; i < this.posts.size(); i++){
+            this.posts.get(i).updateDistance(loc[0], loc[1]);
+        }
     }
 
     private void sort(){
@@ -98,12 +105,14 @@ public class ViewableContent{
                 Collections.sort(this.posts, new ContentLikeComparator());
                 break;
             case "distance":
+                this.updateDistances();
                 Collections.sort(this.posts, new PostDistanceComparator());
                 break;
             default:
                 throw new IllegalArgumentException("Invalid sorting method");
         }  
     }
+    /*
     public static void main(String[] args){
         Date date = new Date();
         long longdate = date.getTime();
@@ -121,4 +130,5 @@ public class ViewableContent{
             System.out.println(shown.get(i).getContent());
         }
     }
+    */
 }
