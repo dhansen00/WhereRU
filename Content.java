@@ -8,6 +8,11 @@ public class Content{
     protected Long posttime;   
     protected int likes;
     protected int dislikes;
+    protected Boolean isPost;
+
+    public Boolean isPost(){
+        return this.isPost;
+    }
 
     public int getId(){
         return this.id;

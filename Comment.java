@@ -9,6 +9,7 @@ public class Comment extends Content {
         this.text = text;
         this.posttime = posttime;
         this.likes = likes;
+        this.isPost = false;
     }
 
     public int getPostId(){
