@@ -16,6 +16,7 @@ public class Comment extends Content {
         return this.postId;
     }
 
+    @Override
     public void like(){
         try{
             if(Database.likeComment(this.username, this.id)){
@@ -26,6 +27,7 @@ public class Comment extends Content {
         }     
     }
 
+    @Override
     public void dislike(){
         try{
             if(Database.dislikeComment(this.username, this.id)){

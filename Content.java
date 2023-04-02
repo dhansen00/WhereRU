@@ -37,6 +37,9 @@ public class Content{
     public int getDislikes(){
         return this.dislikes;
     }
+
+    public void like(){}
+    public void dislike(){}
 }
 
 class ContentTimeComparator implements Comparator<Content>{

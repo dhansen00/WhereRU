@@ -113,6 +113,11 @@ public class ViewableContent{
         ViewableContent content = new ViewableContent(user);
         ArrayList<Content> shown = content.showContent();
         for(int i = 0; i < shown.size(); i++){
+            if(!shown.get(i).isPost()){
+                System.out.println(shown.get(i).getLikes());
+                shown.get(i).dislike();
+                System.out.println(shown.get(i).getLikes());
+            }
             System.out.println(shown.get(i).getContent());
         }
     }

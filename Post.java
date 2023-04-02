@@ -48,6 +48,7 @@ public class Post extends Content{
         this.lastKnownDist = (int)(distance * 1000);
     }
 
+    @Override
     public void like(){
         try{
             if(Database.likePost(this.username, this.id)){
@@ -58,6 +59,7 @@ public class Post extends Content{
         }     
     }
 
+    @Override
     public void dislike(){
         try{
             if(Database.dislikePost(this.username, this.id)){
