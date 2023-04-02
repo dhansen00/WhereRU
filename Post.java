@@ -19,6 +19,7 @@ public class Post extends Content{
         this.posttime = posttime;
         this.likes = likes;
         this.lastKnownDist = 0;
+        this.isPost = true;
     }
 
 
