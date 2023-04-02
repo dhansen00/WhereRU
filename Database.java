@@ -333,7 +333,7 @@ public class Database {
         double distance = R * c;
         
         //Convert km to miles
-        distance = distance / 1.609;
+        distance = distance * 1000;
         return distance;
     }
 

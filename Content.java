@@ -1,4 +1,5 @@
 //import java.lang.Math;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Content{
@@ -40,6 +41,13 @@ public class Content{
 
     public void like(){}
     public void dislike(){}
+    public void updateDistance(double lat, double lon){}
+    public double getDistance(){
+        return 0.0;
+    }
+    public ArrayList<String> getTags(){
+        return new ArrayList<String>();
+    }
 }
 
 class ContentTimeComparator implements Comparator<Content>{

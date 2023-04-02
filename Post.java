@@ -22,7 +22,7 @@ public class Post extends Content{
         this.isPost = true;
     }
 
-
+    @Override
     public double getDistance(){
         return this.lastKnownDist;
     }
@@ -31,10 +31,12 @@ public class Post extends Content{
         return this.radius;
     }
 
+    @Override
     public ArrayList<String> getTags(){
         return this.tags;
     }
 
+    @Override
     public void updateDistance(double lat, double lon){
         double R = 6371.0; // Earth's radius in kilometers
     
