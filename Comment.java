@@ -9,12 +9,14 @@ public class Comment extends Content {
         this.text = text;
         this.posttime = posttime;
         this.likes = likes;
+        this.isPost = false;
     }
 
     public int getPostId(){
         return this.postId;
     }
 
+    @Override
     public void like(){
         try{
             if(Database.likeComment(this.username, this.id)){
@@ -25,6 +27,7 @@ public class Comment extends Content {
         }     
     }
 
+    @Override
     public void dislike(){
         try{
             if(Database.dislikeComment(this.username, this.id)){
