@@ -1,4 +1,5 @@
 //import java.lang.Math;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Content{
@@ -8,6 +9,11 @@ public class Content{
     protected Long posttime;   
     protected int likes;
     protected int dislikes;
+    protected Boolean isPost;
+
+    public Boolean isPost(){
+        return this.isPost;
+    }
 
     public int getId(){
         return this.id;
@@ -31,6 +37,16 @@ public class Content{
 
     public int getDislikes(){
         return this.dislikes;
+    }
+
+    public void like(){}
+    public void dislike(){}
+    public void updateDistance(double lat, double lon){}
+    public double getDistance(){
+        return 0.0;
+    }
+    public ArrayList<String> getTags(){
+        return new ArrayList<String>();
     }
 }
 

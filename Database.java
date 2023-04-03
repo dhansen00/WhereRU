@@ -333,7 +333,7 @@ public class Database {
         double distance = R * c;
         
         //Convert km to miles
-        distance = distance / 1.609;
+        distance = distance * 1000;
         return distance;
     }
 
@@ -355,5 +355,31 @@ public class Database {
             comments.add(curr);
         }
         return comments;
+    }
+
+    public static ArrayList<Post> getPosts(String username)throws Exception{
+        ResultSet r = query("SELECT * FROM posts WHERE author = '" + username +"';");
+        ArrayList<Post> posts = new ArrayList<Post>();
+        while (r.next()){
+            int postid = r.getInt(1);
+            String author = username;
+            String text = r.getString(3);
+            int radius = r.getInt(4);
+            int likes = r.getInt(5);
+            ArrayList<String> tags = new ArrayList<String>();
+            tags.add(r.getString(6));
+            tags.add(r.getString(7));
+            tags.add(r.getString(8));
+            tags.add(r.getString(9));
+            tags.add(r.getString(10));
+            Double lat = r.getDouble(11);
+            Double lon = r.getDouble(12);
+            Long time = r.getLong(13);
+
+            Post curr = new Post(postid, author,text,tags,radius,lat,lon,time,likes);
+            posts.add(curr);
+        }
+
+        return posts;
     }
 }

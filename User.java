@@ -29,6 +29,8 @@ public class User {
         Double[] location = new Double[2];
         location[0] = 0.0;
         location[1] = 0.0;
+        //location[0] = 38.897957;
+        //location[1] = -77.03656;
         return location;
     }
 
