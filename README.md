@@ -1,2 +1,0 @@
-# WhereRU
-WhereRU provides exclusivity and locally contextual posts for users that don’t want algorithmically fit content, but rather shaped by the geography of the location, creating a more organic experience. While inherently social media targets a broad audience, with the same appeal of Pokemon Go, it encourages the exploration of new places in real life rather than remain sedentary in their home. It’s meant to be used out and about, enhancing and adding context to a real experience.
