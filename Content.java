@@ -1,14 +1,13 @@
-//import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+//generic class, to be extended into post and comment
 public class Content{
     protected int id;
     protected String text;
     protected String username;
     protected Long posttime;   
     protected int likes;
-    protected int dislikes;
     protected Boolean isPost;
 
     public Boolean isPost(){
@@ -35,10 +34,6 @@ public class Content{
         return this.likes;
     }
 
-    public int getDislikes(){
-        return this.dislikes;
-    }
-
     public void like(){}
     public void dislike(){}
     public void updateDistance(double lat, double lon){}
@@ -50,6 +45,7 @@ public class Content{
     }
 }
 
+//comparator for sorting content by time
 class ContentTimeComparator implements Comparator<Content>{
     @Override
     public int compare(Content c1, Content c2){
@@ -57,6 +53,7 @@ class ContentTimeComparator implements Comparator<Content>{
     }
 }
 
+//comparator for sorting content by likes
 class ContentLikeComparator implements Comparator<Content>{
     @Override
     public int compare(Content c1, Content c2){

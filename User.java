@@ -5,22 +5,8 @@ public class User {
     public User (String user,int internetPoints){
         username = user;
         likes = internetPoints;
-    }
-    /* 
-    public void makePost(String text, Double[] location, int radius, String[] tags){
-        Calendar cal = Calendar.getInstance();
-        java.util.Date date=cal.getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-        int postTime = Integer.parseInt(dateFormat.format(date));
-        try{
-            Database.insertPost(username, text, postTime, location, radius, tags);
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        //return post object?
-    }
-    */
+    } // constructor
+
     public String getUsername(){
         return new String(username);
     }
@@ -32,7 +18,7 @@ public class User {
         //location[0] = 38.897957;
         //location[1] = -77.03656;
         return location;
-    }
+    } // hardcoding user location for testing
 
     public int getLikes(){
         int ret = likes;

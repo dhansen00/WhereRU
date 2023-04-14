@@ -10,7 +10,7 @@ public class Comment extends Content {
         this.posttime = posttime;
         this.likes = likes;
         this.isPost = false;
-    }
+    } // constructor
 
     public int getPostId(){
         return this.postId;
@@ -25,7 +25,7 @@ public class Comment extends Content {
         }catch(Exception e){
             System.out.println(e.getMessage());
         }     
-    }
+    } // implements comment specific like behavior
 
     @Override
     public void dislike(){
@@ -36,5 +36,5 @@ public class Comment extends Content {
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
-    }
+    } // implements comment specific dislike behavior
 }
