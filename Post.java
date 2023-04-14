@@ -20,7 +20,7 @@ public class Post extends Content{
         this.likes = likes;
         this.lastKnownDist = 0;
         this.isPost = true;
-    }
+    } // constructor
 
     @Override
     public double getDistance(){
@@ -48,7 +48,7 @@ public class Post extends Content{
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         double distance = R * c;
         this.lastKnownDist = (int)(distance * 1000);
-    }
+    } // updates distance to user according to Haversine formula
 
     @Override
     public void like(){
@@ -59,7 +59,7 @@ public class Post extends Content{
         }catch(Exception e){
             System.out.println(e.getMessage());
         }     
-    }
+    } // implements post specific like behavior
 
     @Override
     public void dislike(){
@@ -70,10 +70,11 @@ public class Post extends Content{
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
-    }
+    } // implements post specific dislike behavior
 
 }
 
+// comparator for sorting posts by distance to user
 class PostDistanceComparator implements Comparator<Post>{
     @Override
     public int compare(Post post1, Post post2){
