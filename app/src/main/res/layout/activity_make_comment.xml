@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MakeCommentActivity">
+
+    <EditText
+        android:id="@+id/commentEditText"
+        android:layout_width="330dp"
+        android:layout_height="187dp"
+        android:backgroundTint="#FFFFFF"
+        android:hint="Type Here"
+        android:textAlignment="center"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="126dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="330dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="41dp"
+        android:text="Comment Text"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/commentEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="127dp"
+        android:layout_marginTop="272dp"
+        android:layout_marginEnd="128dp"
+        android:layout_marginBottom="258dp"
+        android:onClick="postComment"
+        android:text="Post Comment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commentEditText" />
+
+    <TextView
+        android:id="@+id/invalidText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="114dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="115dp"
+        android:layout_marginBottom="150dp"
+        android:background="#C8C8C8"
+        android:text="Invalid Text"
+        android:textAlignment="center"
+        android:textColor="#ED1B1B"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commentEditText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MakePostActivity">
+
+    <EditText
+        android:id="@+id/postEditText"
+        android:layout_width="298dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="11dp"
+        android:background="#CFCECE"
+        android:hint="Type Here"
+        android:textAlignment="viewStart"
+        app:layout_constraintBottom_toTopOf="@+id/radiusTitleView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postTextTitleView" />
+
+    <EditText
+        android:id="@+id/radiusEditText"
+        android:layout_width="298dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="20dp"
+        android:background="#CFCECE"
+        android:hint="Type Here"
+        android:textAlignment="viewStart"
+        app:layout_constraintBottom_toTopOf="@+id/tagTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radiusTitleView" />
+
+
+    <TextView
+        android:id="@+id/postTextTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="296dp"
+        android:text="Post Text"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/postEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/radiusTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="58dp"
+        android:layout_marginEnd="296dp"
+        android:layout_marginBottom="1dp"
+        android:text="Radius"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/radiusEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postEditText"
+        app:layout_constraintVertical_bias="0.53" />
+
+    <TextView
+        android:id="@+id/tagTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="325dp"
+        android:layout_marginBottom="3dp"
+        android:text="Tags"
+        app:layout_constraintBottom_toTopOf="@+id/tagList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radiusEditText" />
+
+    <LinearLayout
+        android:id="@+id/tagList"
+        android:layout_width="298dp"
+        android:layout_height="232dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="23dp"
+        android:background="#CFCECE"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/makePostButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tagTitle">
+
+        <EditText
+            android:id="@+id/tagEditText1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Tag 1" />
+
+        <EditText
+            android:id="@+id/tagEditText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#E1E1E1"
+            android:hint="Tag 2" />
+
+        <EditText
+            android:id="@+id/tagEditText3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Tag 3" />
+
+        <EditText
+            android:id="@+id/tagEditText4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#E1E1E1"
+            android:hint="Tag 4" />
+
+        <EditText
+            android:id="@+id/tagEditText5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Tag 5" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="111dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="90dp"
+        android:layout_marginBottom="28dp"
+        android:onClick="cancelPost"
+        android:text="Cancel"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/makePostButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tagList"
+        app:layout_constraintVertical_bias="0.852" />
+
+    <Button
+        android:id="@+id/makePostButton"
+        android:layout_width="111dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="73dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="59dp"
+        android:layout_marginBottom="28dp"
+        android:onClick="postEntries"
+        android:text="Post"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cancelButton"
+        app:layout_constraintTop_toBottomOf="@+id/tagList" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
