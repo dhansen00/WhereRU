@@ -58,8 +58,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     ArrayList<LatLng> markerCoords = new ArrayList<LatLng>();
     ArrayList<Integer> markerIds = new ArrayList<Integer>();
-    Double userlatitude = 0.0;
-    Double userlongitude = 0.0;
+    Double userlatitude = 42.730857718961154;
+    Double userlongitude = -73.68255985949537;
     String username;
     Integer radius;
     int zoom = 21;
@@ -71,13 +71,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Bundle extras = getIntent().getExtras();
         username = extras.getString("username");
         radius = extras.getInt("radius");
-        userlatitude = extras.getDouble("latitude");
-        userlongitude = extras.getDouble("longitude");
         if(radius == 0){
             //if coming from login screen default radius is 50 meters
             radius = 50;
-            userlatitude = 0.0;
-            userlongitude = 0.0;
+            userlatitude = 42.730857718961154;
+            userlongitude = -73.68255985949537;
         }
         System.out.println("\n\n\nlat"+userlatitude+"lon"+userlongitude);
 
@@ -107,7 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        getLastLocation();
         //get nearby posts from
         LatLng userlocation = new LatLng(userlatitude, userlongitude);
         markerCoords.add(userlocation);
