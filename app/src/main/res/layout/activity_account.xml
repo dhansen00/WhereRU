@@ -21,7 +21,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:onClick="toMapView"
-            android:text="Map" />
+            android:text="@string/map" />
 
         <Button
             android:id="@+id/logoutButton"
@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:onClick="logout"
-            android:text="Logout" />
+            android:text="@string/logout" />
 
         <Button
             android:id="@+id/scrollViewButton"
@@ -39,7 +39,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:onClick="toScrollView"
-            android:text="Scroll View" />
+            android:text="@string/scroll_view" />
 
     </LinearLayout>
 
@@ -68,7 +68,7 @@
         android:id="@+id/commentViewButton"
         android:layout_width="411dp"
         android:layout_height="48dp"
-        android:text="Comments"
+        android:text="@string/comments"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:onClick="setFilters"
-            android:text="Filters" />
+            android:text="@string/filters" />
 
         <Button
             android:id="@+id/mapview"
@@ -32,7 +32,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:onClick="toMapView"
-            android:text="Map View" />
+            android:text="@string/map_view" />
 
         <Button
             android:id="@+id/account"
@@ -41,7 +41,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:onClick="toAccount"
-            android:text="Account" />
+            android:text="@string/account" />
 
     </LinearLayout>
 
@@ -71,7 +71,7 @@
         android:layout_width="411dp"
         android:layout_height="48dp"
         android:onClick="makePost"
-        android:text="Make Post"
+        android:text="@string/make_post"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

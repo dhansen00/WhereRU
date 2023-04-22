@@ -23,7 +23,7 @@
         android:padding="8dp"
         android:layout_margin="5dp"
         android:onClick="scroll"
-        android:text="Scroll View"
+        android:text="@string/scroll_view"
         android:textColor="#ffffff" />
     <Button
         android:id="@+id/zoomInButton"
@@ -35,7 +35,7 @@
         android:textAlignment="center"
         android:layout_marginRight="5dp"
         android:layout_marginTop="60dp"
-        android:text="+"
+        android:text="@string/plus"
         android:onClick="zoomIn"
         android:textColor="#ffffff" />
     <Button
@@ -48,7 +48,7 @@
         android:textAlignment="center"
         android:layout_marginRight="5dp"
         android:layout_marginTop="90dp"
-        android:text="-"
+        android:text="@string/minus"
         android:onClick="zoomOut"
         android:textColor="#ffffff" />
 

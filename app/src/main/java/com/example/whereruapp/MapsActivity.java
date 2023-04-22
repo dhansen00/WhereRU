@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -20,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -43,51 +46,57 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-    int PERMISSION_ID = 44;
-    FusedLocationProviderClient mFusedLocationClient;
+    private int PERMISSION_ID = 44;
+    public FusedLocationProviderClient mFusedLocationClient;
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
-
-    ArrayList<LatLng> markerCoords = new ArrayList<LatLng>();
-    ArrayList<Integer> markerIds = new ArrayList<Integer>();
-    Double userlatitude = 42.730857718961154;
-    Double userlongitude = -73.68255985949537;
-    String username;
-    Integer radius;
-    int zoom = 21;
+    //hard coded because getting location data is not easily testable
+    public Double userlatitude = 42.730857718961154;
+    public Double userlongitude = -73.68255985949537;
+    public String username;
+    public Integer radius;
+    int zoom = 15;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Bundle extras = getIntent().getExtras();
-        username = extras.getString("username");
-        radius = extras.getInt("radius");
-        if(radius == 0){
+        //get the variables passed in from the previous screen
+        Intent intent = this.getIntent();
+        Bundle extras = intent.getExtras();
+        this.username = extras.getString("username");
+        this.radius = extras.getInt("radius");
+        if(0 == this.radius){
             //if coming from login screen default radius is 50 meters
-            radius = 50;
-            userlatitude = 42.730857718961154;
-            userlongitude = -73.68255985949537;
+            this.radius = 50;
+            //hard coded because getting location data is not easily testable
+            this.userlatitude = 42.730857718961154;
+            this.userlongitude = -73.68255985949537;
         }
-        System.out.println("\n\n\nlat"+userlatitude+"lon"+userlongitude);
 
+        //Create the map
         super.onCreate(savedInstanceState);
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        getLastLocation();
+        this.mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        this.getLastLocation();
 
-        binding = ActivityMapsBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        LayoutInflater layoutInflater = this.getLayoutInflater();
+        this.binding = ActivityMapsBinding.inflate(layoutInflater);
+        RelativeLayout root = this.binding.getRoot();
+        this.setContentView(root);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -104,99 +113,125 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        getLastLocation();
-        //get nearby posts from
-        LatLng userlocation = new LatLng(userlatitude, userlongitude);
-        markerCoords.add(userlocation);
-        markerIds.add(markerIds.size()+1);
+        this.mMap = googleMap;
 
-        mMap.addMarker(new MarkerOptions().position(userlocation).title("0").icon(BitmapFromVector(getApplicationContext(), R.drawable.baseline_person_pin_circle_24)));
+        //get the current location
+        this.getLastLocation();
+        LatLng userlocation = new LatLng(this.userlatitude, this.userlongitude);
 
-        getPosts(userlatitude,userlongitude,radius);
+        //add a marker that shows the users current location
+        MarkerOptions position = new MarkerOptions().position(userlocation);
+        MarkerOptions title = position.title("0");
+        Context applicationContext = this.getApplicationContext();
+        BitmapDescriptor iconDescriptor = this.BitmapFromVector(applicationContext, R.drawable.baseline_person_pin_circle_24);
+        MarkerOptions icon = title.icon(iconDescriptor);
+        this.mMap.addMarker(icon);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(userlocation));
+        this.getPosts(this.userlatitude, this.userlongitude, this.radius);
+
+        //move the camera to focus on the current post
+        CameraUpdate update = CameraUpdateFactory.newLatLng(userlocation);
+        this.mMap.moveCamera(update);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(userlocation)
                 .zoom(zoom)
                 .bearing(0)
                 .tilt(45)
                 .build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+        this.mMap.animateCamera(cameraUpdate);
+
+        //when clicking on a post go to an expanded post
+        this.mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public boolean onMarkerClick(Marker m) {
-                int markerid = Integer.parseInt(m.getTitle());
-                if (markerid != 0) {
+            public boolean onMarkerClick(Marker marker) {
+                int markerid = Integer.parseInt(marker.getTitle());
+                if (0 != markerid) {
                     //go to a post view that shows this posts data
                     Intent intent = new Intent(MapsActivity.this, ExpandedPostActivity.class);
-                    intent.putExtra("username", username);
-                    intent.putExtra("radius", radius);
-                    intent.putExtra("latitude", userlatitude);
-                    intent.putExtra("longitude", userlongitude);
+                    intent.putExtra("username", MapsActivity.this.username);
+                    intent.putExtra("radius", MapsActivity.this.radius);
+                    intent.putExtra("latitude", MapsActivity.this.userlatitude);
+                    intent.putExtra("longitude", MapsActivity.this.userlongitude);
                     intent.putExtra("postid", markerid);
-                    startActivity(intent);
+                    MapsActivity.this.startActivity(intent);
                 }
                 return true;
             }
         });
     }
 
-    public void getPosts(Double latitude, Double longitude, int radius){
-        GetDataService service = RetroClientInstance.getRetrofitInstance().create(GetDataService.class);
-
+    /**
+     * Gets the posts that are near the users location
+     * @param latitude  the current latitude to search from
+     * @param longitude the current longitude to search from
+     * @param r    the current radius to search
+     */
+    private void getPosts(Double latitude, Double longitude, int r){
+        //set up the args for the database query
         HashMap<String,Object> args = new HashMap<String,Object>();
         args.put("latitude",latitude);
         args.put("longitude",longitude);
-        args.put("radius",radius);
+        args.put("radius",r);
 
+        //call to the db for posts
+        Retrofit retrofitInstance = RetroClientInstance.getRetrofitInstance();
+        GetDataService service = retrofitInstance.create(GetDataService.class);
         Call<List<RetroPost>> call = service.getNearby(args);
         call.enqueue(new Callback<List<RetroPost>>() {
             @Override
             public void onResponse(Call<List<RetroPost>> call, Response<List<RetroPost>> response) {
                 if(response.isSuccessful()) {
+                    //upon receipt of the response from the database add the posts to the display
                     List<RetroPost> nearbyPosts = response.body();
                     for (int x = 0; x < nearbyPosts.size() ; x++) {
-                        addPostMarkers(nearbyPosts.get(x).id,nearbyPosts.get(x).latitude,nearbyPosts.get(x).longitude);
+                        RetroPost retroPost = nearbyPosts.get(x);
+                        MapsActivity.this.addPostMarkers(retroPost.id, retroPost.latitude, retroPost.longitude);
                     }
                 }
                 else {
-                    try {
-                        System.out.println(response.errorBody().string());
-                    }
-                    catch(Exception e){}
+                    throw new EmptyStackException();
                 }
             }
             @Override
             public void onFailure(Call<List<RetroPost>> call, Throwable t) {
-                t.printStackTrace();
+                throw new EmptyStackException();
             }
         });
     }
-    public void addPostMarkers(int id,double latitude, double longitude){
+
+    /**
+     * Adds a post as a marker on the map
+     * @param id            the id of the post
+     * @param latitude      the latitude of the post
+     * @param longitude     the longitude of the post
+     */
+    private void addPostMarkers(int id,double latitude, double longitude){
         LatLng postlocation = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(postlocation).title(""+id));
+        MarkerOptions position = new MarkerOptions().position(postlocation);
+        String value = String.valueOf(id);
+        MarkerOptions title = position.title(value);
+        this.mMap.addMarker(title);
     }
 
     @SuppressLint("MissingPermission")
     private void getLastLocation() {
         // check if permissions are given
-        if (checkPermissions()) {
-
+        if (this.checkPermissions()) {
             // check if location is enabled
-            if (isLocationEnabled()) {
-
+            if (this.isLocationEnabled()) {
                 // getting last
                 // location from
                 // FusedLocationClient
                 // object
-                mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                this.mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         Location location = task.getResult();
                         if (location == null) {
-                            requestNewLocationData();
+                            MapsActivity.this.requestNewLocationData();
                         } else {
+                            //this is where you would set the user location using gps
                             //userlatitude = location.getLatitude();
                             //userlongitude = location.getLongitude();
                         }
@@ -208,7 +243,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             // if permissions aren't available,
             // request for permissions
-            requestPermissions();
+            this.requestPermissions();
         }
     }
     @SuppressLint("MissingPermission")
@@ -224,7 +259,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // setting LocationRequest
         // on FusedLocationClient
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        this.mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
     // method to check for permissions
@@ -259,23 +294,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (requestCode == PERMISSION_ID) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getLastLocation();
+                this.getLastLocation();
             }
         }
     }
+
+    /**
+     * Sends the user to the scroll view
+     * @param view view of the scroll view button
+     */
     public void scroll(View view){
         Intent intent = new Intent(MapsActivity.this, ScrollingActivity.class);
-        intent.putExtra("username",username);
-        intent.putExtra("radius",radius);
-        intent.putExtra("latitude",userlatitude);
-        intent.putExtra("longitude",userlongitude);
-        startActivity(intent);
+        intent.putExtra("username", this.username);
+        intent.putExtra("radius", this.radius);
+        intent.putExtra("latitude", this.userlatitude);
+        intent.putExtra("longitude", this.userlongitude);
+        this.startActivity(intent);
     }
     @Override
     public void onResume() {
         super.onResume();
-        if (checkPermissions()) {
-            getLastLocation();
+        if (this.checkPermissions()) {
+            this.getLastLocation();
         }
     }
 
@@ -311,36 +351,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    public void zoomIn(View v){
-        LatLng userlocation = new LatLng(userlatitude, userlongitude);
-        if (zoom < 21){
-            zoom+=2;
+    /**
+     * Zooms in the view of the user around their location by a unit of 2
+     * @param view the view of the zoom in button
+     */
+    public void zoomIn(View view){
+        LatLng userlocation = new LatLng(this.userlatitude, this.userlongitude);
+        if (21 > this.zoom){
+            this.zoom +=2;
         }
-        if (zoom >21){
-            zoom = 21;
+        if (21 < this.zoom){
+            this.zoom = 21;
         }
+        //move the camera position
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(userlocation)
-                .zoom(zoom)
-                .bearing(0)
-                .tilt(45)
+                .zoom(this.zoom)
+                .bearing((float) 0)
+                .tilt(45.0F)
                 .build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+        this.mMap.animateCamera(cameraUpdate);
     }
-    public void zoomOut(View v){
-        LatLng userlocation = new LatLng(userlatitude, userlongitude);
-        if (zoom > 2){
-            zoom-=2;
+
+    /**
+     * Zooms out the view of the user around their location by a unit of 2
+     * @param view
+     */
+    public void zoomOut(View view){
+        LatLng userlocation = new LatLng(this.userlatitude, this.userlongitude);
+        if (2 < this.zoom){
+            this.zoom -=2;
         }
-        if (zoom <2){
-            zoom = 2;
+        if (2 > this.zoom){
+            this.zoom = 2;
         }
+        //move the camera position
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(userlocation)
-                .zoom(zoom)
-                .bearing(0)
-                .tilt(45)
+                .zoom(this.zoom)
+                .bearing((float) 0)
+                .tilt(45.0F)
                 .build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+        this.mMap.animateCamera(cameraUpdate);
     }
 }

@@ -1,65 +1,45 @@
 package com.example.whereruapp;//import java.lang.Math;
-import java.util.ArrayList;
-import java.util.Comparator;
 
 public class Content{
-    protected int id;
-    protected String text;
-    protected String username;
-    protected Long posttime;   
-    protected int likes;
-    protected int dislikes;
-    protected Boolean isPost;
+    protected int id = 0;
+    protected String text = null;
+    protected String username = null;
+    protected Long posttime = null;
+    protected int likes = 0;
+    protected int dislikes = 0;
 
-    public Boolean isPost(){
-        return this.isPost;
-    }
-
+    /**
+     * @return the id of this
+     */
     public int getId(){
         return this.id;
     }
 
+    /**
+     * @return the text that this content displays
+     */
     public String getContent(){
         return this.text;
     }
 
+    /**
+     * @return the username that posted this content
+     */
     public String getUsername(){
         return this.username;
     }
 
+    /**
+     * @return the time that the content was posted
+     */
     public Long getPostTime(){
         return this.posttime;
     }
 
+    /**
+     * @return the likes that this content has obtained
+     */
     public int getLikes(){
         return this.likes;
-    }
-
-    public int getDislikes(){
-        return this.dislikes;
-    }
-
-    public void like(){}
-    public void dislike(){}
-    public void updateDistance(double lat, double lon){}
-    public double getDistance(){
-        return 0.0;
-    }
-    public ArrayList<String> getTags(){
-        return new ArrayList<String>();
-    }
-}
-
-class ContentTimeComparator implements Comparator<Content>{
-    @Override
-    public int compare(Content c1, Content c2){
-        return (int)(c1.getPostTime() - c2.getPostTime());
-    }
-}
-
-class ContentLikeComparator implements Comparator<Content>{
-    @Override
-    public int compare(Content c1, Content c2){
-        return c2.getLikes() - c1.getLikes();
     }
 }

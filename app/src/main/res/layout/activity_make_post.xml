@@ -14,7 +14,7 @@
         android:layout_marginEnd="57dp"
         android:layout_marginBottom="11dp"
         android:background="#CFCECE"
-        android:hint="Type Here"
+        android:hint="@string/type_here"
         android:textAlignment="viewStart"
         app:layout_constraintBottom_toTopOf="@+id/radiusTitleView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +29,7 @@
         android:layout_marginEnd="57dp"
         android:layout_marginBottom="20dp"
         android:background="#CFCECE"
-        android:hint="Type Here"
+        android:hint="@string/type_here"
         android:textAlignment="viewStart"
         app:layout_constraintBottom_toTopOf="@+id/tagTitle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
         android:layout_marginStart="56dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="296dp"
-        android:text="Post Text"
+        android:text="@string/post_text"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/postEditText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +59,7 @@
         android:layout_marginStart="58dp"
         android:layout_marginEnd="296dp"
         android:layout_marginBottom="1dp"
-        android:text="Radius"
+        android:text="@string/radius"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/radiusEditText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +75,7 @@
         android:layout_marginStart="56dp"
         android:layout_marginEnd="325dp"
         android:layout_marginBottom="3dp"
-        android:text="Tags"
+        android:text="@string/tags"
         app:layout_constraintBottom_toTopOf="@+id/tagList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Tag 1" />
+            android:hint="@string/tag_1" />
 
         <EditText
             android:id="@+id/tagEditText2"
@@ -109,14 +109,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#E1E1E1"
-            android:hint="Tag 2" />
+            android:hint="@string/tag_2" />
 
         <EditText
             android:id="@+id/tagEditText3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Tag 3" />
+            android:hint="@string/tag_3" />
 
         <EditText
             android:id="@+id/tagEditText4"
@@ -124,14 +124,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#E1E1E1"
-            android:hint="Tag 4" />
+            android:hint="@string/tag_4" />
 
         <EditText
             android:id="@+id/tagEditText5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Tag 5" />
+            android:hint="@string/tag_5" />
 
     </LinearLayout>
 
@@ -144,7 +144,7 @@
         android:layout_marginEnd="90dp"
         android:layout_marginBottom="28dp"
         android:onClick="cancelPost"
-        android:text="Cancel"
+        android:text="@string/cancel"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/makePostButton"
@@ -162,11 +162,32 @@
         android:layout_marginEnd="59dp"
         android:layout_marginBottom="28dp"
         android:onClick="postEntries"
-        android:text="Post"
+        android:text="@string/post"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cancelButton"
         app:layout_constraintTop_toBottomOf="@+id/tagList" />
+
+    <TextView
+        android:id="@+id/invalidDistance"
+        android:layout_width="208dp"
+        android:layout_height="39dp"
+        android:layout_weight="1"
+        android:background="#939593"
+        android:gravity="center"
+        android:text="@string/radius_should_be_greater_than_0_and_less_than_1000_meters"
+        android:textAlignment="center"
+        android:textColor="#E12B2B"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.438"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

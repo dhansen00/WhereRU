@@ -4,65 +4,86 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.time.Instant;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * A screen where the user can make a comment on the post displayed
+ */
 public class MakeCommentActivity extends AppCompatActivity {
-    int radius;
-    String username;
-    Double userlatitude;
-    Double userlongitude;
-    int postid;
+    public int radius;
+    public String username;
+    public Double userlatitude;
+    public Double userlongitude;
+    public int postid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Bundle extras = getIntent().getExtras();
-        username = extras.getString("username");
-        radius = extras.getInt("radius");
-        userlatitude = extras.getDouble("latitude");
-        userlongitude = extras.getDouble("longitude");
-        postid = extras.getInt("postid");
+        //get the values passed over from the previous screen
+        Intent intent = this.getIntent();
+        Bundle extras = intent.getExtras();
+        this.username = extras.getString("username");
+        this.radius = extras.getInt("radius");
+        this.userlatitude = extras.getDouble("latitude");
+        this.userlongitude = extras.getDouble("longitude");
+        this.postid = extras.getInt("postid");
+
+        //create the display
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_comment);
     }
 
-    public void postComment(View v){
-        EditText commentText = (EditText) findViewById(R.id.commentEditText);
-        String commentString = commentText.getText().toString();
-        if (commentString.equals("")){
-            TextView invalidText = (TextView) findViewById(R.id.invalidText);
+    /**
+     * Posts a comment associated with the current post
+     * @param view view of the post comment button
+     */
+    public void postComment(View view){
+        //get the text in the comment text field
+        EditText commentText = (EditText) this.findViewById(R.id.commentEditText);
+        Editable text = commentText.getText();
+        String commentString = text.toString();
+
+        //verify that the comment is not an empty string
+        if (commentString.isEmpty()){
+            TextView invalidText = (TextView) this.findViewById(R.id.invalidText);
             invalidText.setVisibility(View.VISIBLE);
         }
         else{
-            System.out.println();
-            GetDataService service = RetroClientInstance.getRetrofitInstance().create(GetDataService.class);
+            //Creates a HashMap for the objects to go in the body of the request
             HashMap<String,Object> args = new HashMap<String,Object>();
-            args.put("postid",postid);
+            args.put("postid", this.postid);
             args.put("text",commentString);
-            args.put("author",username);
-            args.put("time", Instant.now().toEpochMilli());
+            args.put("author", this.username);
+            long value = Instant.now().toEpochMilli();
+            args.put("time", value);
+
+            //perform a call to the db to post the comment
+            GetDataService service = RetroClientInstance.getRetrofitInstance().create(GetDataService.class);
             Call<String> call = service.insertComment(args);
             call.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
+                    //send the user back to the ExpandedPostActivity
                     Intent intent = new Intent(MakeCommentActivity.this,ExpandedPostActivity.class);
-                    intent.putExtra("username",username);
-                    intent.putExtra("radius",radius);
-                    intent.putExtra("latitude",userlatitude);
-                    intent.putExtra("longitude",userlongitude);
-                    intent.putExtra("postid",postid);
-                    startActivity(intent);
+                    intent.putExtra("username", MakeCommentActivity.this.username);
+                    intent.putExtra("radius", MakeCommentActivity.this.radius);
+                    intent.putExtra("latitude", MakeCommentActivity.this.userlatitude);
+                    intent.putExtra("longitude", MakeCommentActivity.this.userlongitude);
+                    intent.putExtra("postid", MakeCommentActivity.this.postid);
+                    MakeCommentActivity.this.startActivity(intent);
                 }
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
-                    t.printStackTrace();
+                    throw new EmptyStackException();
                 }
             });
         }
